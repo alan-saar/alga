@@ -8,11 +8,11 @@
 		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.algaworks</groupId>
+	<groupId>com.alga</groupId>
 	<artifactId>tdd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tdd</name>
-	<description>Algaworks curso tdd</description>
+	<description>test driven development</description>
 	<url/>
 	<licenses>
 		<license/>
