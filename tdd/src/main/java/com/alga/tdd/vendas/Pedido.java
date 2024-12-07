@@ -1,20 +1,28 @@
 package com.alga.tdd.vendas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pedido {
 
-    private double valorTotal;
-    private double desconto;
+    private List<ItemPedido> itens = new ArrayList<>();
 
     public void adicionarItem(ItemPedido itemPedido) {
-        valorTotal = itemPedido.getValorUnitario() * itemPedido.getQuantidade();
+        itens.add(itemPedido);
     }
 
-    public double valorTotal() {
-        return valorTotal;
-    }
+    public ResumoPedido resumo() {
+        double valorTotal = itens.stream().mapToDouble(i -> i.getValorUnitario() * i.getQuantidade()).sum();
+        double desconto = 0;
+        if (valorTotal > 300.0 && valorTotal <= 800.00) {
+            desconto = valorTotal * 0.04;
+        } else if (valorTotal > 800.00 && valorTotal <= 1000.00) {
+            desconto = valorTotal * 0.06;
+        } else if (valorTotal > 1000.00) {
+            desconto = valorTotal * 0.08;
+        }
 
-    public double desconto() {
-        return desconto;
+        return new ResumoPedido(valorTotal, desconto);
     }
 
 }
