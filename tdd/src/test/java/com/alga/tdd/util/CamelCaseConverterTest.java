@@ -1,11 +1,27 @@
 package com.alga.tdd.util;
 
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CamelCaseConverterTest {
 
-    @Test
-    public void deveCriarObjetoCamelCaseConverter() throws Exception {
-        CamelCaseConverter = new CamelCaseConverter();
+    private CamelCaseConverter camelCase;
+
+    @BeforeEach
+    public void setup() {
+        camelCase = new CamelCaseConverter();
     }
+
+    @Test
+    public void deveConverterNomeSimples() throws Exception {
+        assertEquals("Lionel", camelCase.converter("lionel"));
+    }
+
+    @Test
+    public void deveConverterNomeSimplesMisturadoMaiusculoEMinusculo() throws Exception {
+        assertEquals("Lionel", camelCase.converter("lIonel"));
+    }
+
 }
