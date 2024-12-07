@@ -5,13 +5,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.alga.tdd.vendas.desconto.CalculadoraDesconto1aFaixa;
+import com.alga.tdd.vendas.desconto.CalculadoraDesconto2aFaixa;
+import com.alga.tdd.vendas.desconto.CalculadoraDesconto3aFaixa;
+import com.alga.tdd.vendas.desconto.CalculadoraFaixaDesconto;
+import com.alga.tdd.vendas.desconto.SemDesconto;
+
 public class PedidoTest {
 
     private Pedido pedido;
 
     @BeforeEach
     public void setup() {
-        pedido = new Pedido();
+        CalculadoraFaixaDesconto calculadoraFaixaDesconto = new CalculadoraDesconto3aFaixa(
+                new CalculadoraDesconto2aFaixa(
+                        new CalculadoraDesconto1aFaixa(
+                                new SemDesconto(null))));
+        pedido = new Pedido(calculadoraFaixaDesconto);
     }
 
     private void assertResumoPedido(double valorTotal, double desconto) {
