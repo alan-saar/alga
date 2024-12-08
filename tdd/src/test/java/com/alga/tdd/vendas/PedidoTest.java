@@ -16,8 +16,9 @@ public class PedidoTest {
 
     private void assertResumoPedido(double valorTotal, double desconto) {
         ResumoPedido resumoPedido = pedido.construir().resumo();
-        assertEquals(valorTotal, resumoPedido.getValorTotal());
-        assertEquals(desconto, resumoPedido.getDesconto());
+
+        // utiliza o equals da classe ResumoPedido
+        assertEquals(new ResumoPedido(valorTotal, desconto), resumoPedido);
     }
 
     @Test
