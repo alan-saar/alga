@@ -1,9 +1,12 @@
 package com.alga.tdd.vendas;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.alga.tdd.exceptions.QuantidadeItensInvalidaException;
 
 public class PedidoTest {
 
@@ -66,6 +69,13 @@ public class PedidoTest {
                 .comItem(10.0, 30);
 
         assertResumoPedido(1200.0, 96.0);
+    }
+
+    @Test
+    public void naoAceitarPedidosComItensComQuantidadesNegativas() throws Exception {
+        assertThrows(QuantidadeItensInvalidaException.class, () -> {
+            pedido.comItem(0.0, -10);
+        });
     }
 
 }

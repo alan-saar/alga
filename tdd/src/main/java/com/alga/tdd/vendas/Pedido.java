@@ -3,6 +3,7 @@ package com.alga.tdd.vendas;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alga.tdd.exceptions.QuantidadeItensInvalidaException;
 import com.alga.tdd.vendas.desconto.CalculadoraFaixaDesconto;
 
 public class Pedido {
@@ -15,7 +16,14 @@ public class Pedido {
         this.calculadoraFaixaDesconto = calculadoraFaixaDesconto;
     }
 
+    private void validarQuantidadeItens(ItemPedido itemPedido) {
+        if (itemPedido.getQuantidade() < 0) {
+            throw new QuantidadeItensInvalidaException();
+        }
+    }
+
     public void adicionarItem(ItemPedido itemPedido) {
+        validarQuantidadeItens(itemPedido);
         itens.add(itemPedido);
     }
 
