@@ -13,5 +13,6 @@ public @Data class Pedido {
 
     private double valor;
     private Cliente cliente;
+    private StatusPedido status;
 
 }

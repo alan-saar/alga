@@ -1,15 +1,17 @@
 package com.alga.tdd.pedidos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
+import com.alga.tdd.exceptions.StatusPedidoInvalidoException;
 import com.alga.tdd.pedidos.email.NotificadorEmail;
 import com.alga.tdd.pedidos.repository.PedidosRepository;
 import com.alga.tdd.pedidos.service.AcaoLancamentoPedido;
@@ -55,19 +57,46 @@ public class PedidoServiceTest {
     @Test
     public void deveSalvarPedidoNoBancoDeDados() {
         pedidoService.lancar(pedido);
-        Mockito.verify(pedidos).guardar(pedido);
+        verify(pedidos).guardar(pedido);
     }
 
     @Test
     public void deveNotificarPorEmail() {
         pedidoService.lancar(pedido);
-        Mockito.verify(notificadorEmail).executar(pedido);
+        verify(notificadorEmail).executar(pedido);
 
     }
 
     @Test
     public void deveNotificarPorSMS() {
         pedidoService.lancar(pedido);
-        Mockito.verify(notificadorSms).executar(pedido);
+        verify(notificadorSms).executar(pedido);
+    }
+
+    @Test
+    public void devePagarPedidoPendente() {
+        Long codigoPedido = 135L;
+
+        Pedido pedidoPendente = new Pedido();
+        pedidoPendente.setStatus(StatusPedido.PENDENTE);
+        when(pedidos.buscarPeloCodigo(codigoPedido)).thenReturn(pedidoPendente);
+
+        Pedido pedidoPago = pedidoService.pagar(codigoPedido);
+
+        assertEquals(StatusPedido.PAGO, pedidoPago.getStatus());
+    }
+
+    @Test
+    public void deveNegarPagamento() {
+        Long codigoPedido = 135L;
+
+        Pedido pedidoPendente = new Pedido();
+        pedidoPendente.setStatus(StatusPedido.PAGO);
+        when(pedidos.buscarPeloCodigo(codigoPedido)).thenReturn(pedidoPendente);
+
+        assertThrows(StatusPedidoInvalidoException.class, () -> {
+            pedidoService.pagar(codigoPedido);
+        });
+
     }
 }

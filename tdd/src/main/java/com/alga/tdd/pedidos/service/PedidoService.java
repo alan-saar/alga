@@ -2,7 +2,9 @@ package com.alga.tdd.pedidos.service;
 
 import java.util.List;
 
+import com.alga.tdd.exceptions.StatusPedidoInvalidoException;
 import com.alga.tdd.pedidos.Pedido;
+import com.alga.tdd.pedidos.StatusPedido;
 import com.alga.tdd.pedidos.repository.PedidosRepository;
 
 public class PedidoService {
@@ -25,5 +27,17 @@ public class PedidoService {
         acoes.forEach(a -> a.executar(pedido));
 
         return imposto;
+    }
+
+    public Pedido pagar(Long codigoPedido) {
+
+        Pedido pedido = pedidos.buscarPeloCodigo(codigoPedido);
+        if (pedido.getStatus() != StatusPedido.PENDENTE) {
+            throw new StatusPedidoInvalidoException();
+        }
+
+        pedido.setStatus(StatusPedido.PAGO);
+
+        return pedido;
     }
 }
