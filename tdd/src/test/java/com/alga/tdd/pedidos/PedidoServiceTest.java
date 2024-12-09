@@ -26,34 +26,43 @@ public class PedidoServiceTest {
     @Mock
     private NotificadorSms notificadorSms;
 
+    private Pedido pedido;
+
     @BeforeEach
     public void setup() {
         // ou usa @Mock ou faz o mock direto assim
         // PedidosRepository pedidos = Mockito.mock(PedidosRepository.class);
         MockitoAnnotations.openMocks(this);
         pedidoService = new PedidoService(pedidos, notificadorEmail, notificadorSms);
+
+        pedido = new PedidoBuilder()
+                .comValor(100.0)
+                .para("João", "joao@joao.com", "999-000")
+                .construir();
     }
 
     @Test
     public void deveCalcularOImposto() {
-        Pedido pedido = new PedidoBuilder()
-                .comValor(100.0)
-                .para("João", "joao@joao.com", "999-000")
-                .construir();
-
         double imposto = pedidoService.lancar(pedido);
-
         assertEquals(10.0, imposto);
     }
 
     @Test
     public void deveSalvarPedidoNoBancoDeDados() {
-        Pedido pedido = new PedidoBuilder()
-                .comValor(100.0)
-                .para("João", "joao@joao.com", "999-000")
-                .construir();
         pedidoService.lancar(pedido);
-
         Mockito.verify(pedidos).guardar(pedido);
+    }
+
+    @Test
+    public void deveNotificarPorEmail() {
+        pedidoService.lancar(pedido);
+        Mockito.verify(notificadorEmail).enviar(pedido);
+
+    }
+
+    @Test
+    public void deveNotificarPorSMS() {
+        pedidoService.lancar(pedido);
+        Mockito.verify(notificadorSms).notificar(pedido);
     }
 }
