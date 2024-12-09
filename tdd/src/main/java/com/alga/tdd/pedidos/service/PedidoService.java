@@ -1,28 +1,28 @@
 package com.alga.tdd.pedidos.service;
 
+import java.util.List;
+
 import com.alga.tdd.pedidos.Pedido;
-import com.alga.tdd.pedidos.email.NotificadorEmail;
 import com.alga.tdd.pedidos.repository.PedidosRepository;
-import com.alga.tdd.pedidos.sms.NotificadorSms;
 
 public class PedidoService {
 
     private PedidosRepository pedidos;
-    private NotificadorEmail notificadorEmail;
-    private NotificadorSms notificadorSms;
+    private List<AcaoLancamentoPedido> acoes;
 
-    public PedidoService(PedidosRepository pedidos, NotificadorEmail notificadorEmail, NotificadorSms notificadorSms) {
+    public PedidoService(PedidosRepository pedidos, List<AcaoLancamentoPedido> acoes) {
         this.pedidos = pedidos;
-        this.notificadorEmail = notificadorEmail;
-        this.notificadorSms = notificadorSms;
+        this.acoes = acoes;
     }
 
     public double lancar(Pedido pedido) {
         double imposto = pedido.getValor() * 0.1;
 
         pedidos.guardar(pedido);
-        notificadorEmail.enviar(pedido);
-        notificadorSms.notificar(pedido);
+        // for (AcaoLancamentoPedido acao : acoes) {
+        // acao.executar(pedido);
+        // }
+        acoes.forEach(a -> a.executar(pedido));
 
         return imposto;
     }
