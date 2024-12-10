@@ -1,10 +1,12 @@
 package com.alga.tdd.pedidos.email;
 
 import com.alga.tdd.pedidos.Pedido;
+import com.alga.tdd.pedidos.service.AcaoLancamentoPedido;
 
-public class NotificadorEmail {
+public class NotificadorEmail implements AcaoLancamentoPedido {
 
-    public void enviar(Pedido pedido) {
+    @Override
+    public void executar(Pedido pedido) {
         System.out.println("Enviando email...");
     }
 }
