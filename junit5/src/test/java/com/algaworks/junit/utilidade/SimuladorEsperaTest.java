@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 import java.time.Duration;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class SimuladorEsperaTest {
 
     @Test
+    @Disabled("Testes podem ser desabilitados quando não são mais aplicáveis")
     void deveEsperarENaoDarTimeout() {
         // esse aqui espera a função terminar totalmente mesmo passando da duração
         // estipulada no teste
