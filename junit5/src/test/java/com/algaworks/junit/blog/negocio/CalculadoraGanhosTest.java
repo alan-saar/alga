@@ -51,12 +51,23 @@ public class CalculadoraGanhosTest {
     }
 
     @Test
-    public void deveCalcularGanhos() {
-
+    public void dadoUmPostEAutorPremiumQuandoCalcularGanhosEntaoDeveRetornarValorComBonus() {
         Ganhos ganhos = calculadora.calcular(post);
 
         assertEquals(new BigDecimal("45"), ganhos.getTotalGanho());
+    }
+
+    @Test
+    public void dadoUmPostEAutorQuandoCalcularGanhosEntaoDeveRetornarQuantidadeDePalavras() {
+        Ganhos ganhos = calculadora.calcular(post);
+
         assertEquals(7, ganhos.getQuantidadePalavras());
+    }
+
+    @Test
+    public void dadoUmPostEAutorQuandoCalcularGanhosEntaoDeveRetornarValorPagoPorPalavraDoAutor() {
+        Ganhos ganhos = calculadora.calcular(post);
+
         assertEquals(autor.getValorPagoPorPalavra(), ganhos.getValorPagoPorPalavra());
     }
 
@@ -67,7 +78,5 @@ public class CalculadoraGanhosTest {
         Ganhos ganhos = calculadora.calcular(post);
 
         assertEquals(new BigDecimal("35"), ganhos.getTotalGanho());
-        assertEquals(7, ganhos.getQuantidadePalavras());
-        assertEquals(autor.getValorPagoPorPalavra(), ganhos.getValorPagoPorPalavra());
     }
 }
