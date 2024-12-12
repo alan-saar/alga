@@ -3,10 +3,12 @@ package com.algaworks.junit.utilidade;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.function.Executable;
 
+@DisplayName("Testes no utilitário Saudação")
 public class SaudacaoTest {
 
     // Padrão triple A
@@ -15,6 +17,7 @@ public class SaudacaoTest {
     // Assert
 
     @Test
+    @DisplayName("Deve saudar com bom dia")
     public void saudar() {
         // arrange (as variáveis que voce quem que declarar)
         int horaValida = 9;

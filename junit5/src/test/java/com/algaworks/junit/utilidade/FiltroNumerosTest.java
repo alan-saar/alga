@@ -5,12 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+// Gera os display names a partir do nome da classe
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class FiltroNumerosTest {
 
     @Test
-    public void deveRetornarNumerosPares() {
+    public void deve_Retornar_Numeros_Pares() {
         List<Integer> numeros = List.of(1, 2, 3, 4);
         List<Integer> resultado = FiltroNumeros.numerosPares(numeros);
         List<Integer> numerosParesEsperados = List.of(2, 4);
