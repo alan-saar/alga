@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -21,17 +22,21 @@ public class ContaBancariaTest {
         cb = new ContaBancaria(BigDecimal.valueOf(100l));
     }
 
-    @Test
-    void deveCriarUmaContaBancariaComSaldoPositivo() {
-        cb = new ContaBancaria(BigDecimal.valueOf(100l));
+    @Nested
+    class Saque {
+        @Test
+        void deveCriarUmaContaBancariaComSaldoPositivo() {
+            cb = new ContaBancaria(BigDecimal.valueOf(100l));
 
-    }
+        }
 
-    @Test
-    void deveLancarUmaExecaoAoCriarUmaContaComSaldoNegativo() {
-        assertThrows(RuntimeException.class, () -> {
-            cb = new ContaBancaria(new BigDecimal(-99l));
-        });
+        @Test
+        void deveLancarUmaExecaoAoCriarUmaContaComSaldoNegativo() {
+            assertThrows(RuntimeException.class, () -> {
+                cb = new ContaBancaria(new BigDecimal(-99l));
+            });
+
+        }
 
     }
 
