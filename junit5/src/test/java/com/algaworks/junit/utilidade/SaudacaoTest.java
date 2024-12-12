@@ -47,7 +47,7 @@ public class SaudacaoTest {
     }
 
     @Test
-    public void naoDeveLancarException() {
+    public void dadoUmaHoraValidaQuandoSaudarEntaoNaoDeveLancarException() {
         // assumptions = suposições
         // Faz esse teste somente em um caso específico, como por exemplo uma variavel
         // de ambiente estar setada
