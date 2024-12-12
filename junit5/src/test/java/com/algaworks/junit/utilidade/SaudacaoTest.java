@@ -5,12 +5,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.junit.jupiter.api.function.Executable;
 
 public class SaudacaoTest {
 
+    // Padrão triple A
+    // Arrange
+    // Act
+    // Assert
+
     @Test
     public void saudar() {
-        String saudacao = SaudacaoUtil.saudar(9);
+        // arrange (as variáveis que voce quem que declarar)
+        int horaValida = 9;
+
+        // act
+        String saudacao = SaudacaoUtil.saudar(horaValida);
+
+        // assert
         System.out.println(saudacao);
 
         assertEquals("Bom dia", saudacao, "Saudação incorreta");
@@ -19,10 +31,14 @@ public class SaudacaoTest {
     @Test
     @EnabledIfEnvironmentVariable(named = "ENV", matches = "dev")
     public void deveLancarException() {
-        var exception = assertThrows(IllegalArgumentException.class, () -> {
-            SaudacaoUtil.saudar(-10);
-        });
+        int horaInvalida = -10;
+        Executable chamadaDoMetodoInvalida = () -> SaudacaoUtil.saudar(horaInvalida);
 
+        // var exception = assertThrows(IllegalArgumentException.class, () -> {
+        // SaudacaoUtil.saudar(horaInvalida);
+        // });
+
+        var exception = assertThrows(RuntimeException.class, chamadaDoMetodoInvalida);
         assertEquals("Hora inválida", exception.getMessage(), "deve lançar a mensagem da exception corretamente");
 
     }
