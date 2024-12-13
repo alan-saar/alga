@@ -15,6 +15,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
+
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -26,7 +28,9 @@ import com.algaworks.junit.blog.modelo.Editor;
 @ExtendWith(MockitoExtension.class)
 public class CadastroEditorComMockAnotationTest {
 
-    Editor editor;
+    @Spy
+    // vai criar uma nova instancia a cada teste
+    Editor editor = new Editor(null, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
 
     @Captor
     ArgumentCaptor<Mensagem> mensagemArgumentCaptor;
@@ -43,7 +47,8 @@ public class CadastroEditorComMockAnotationTest {
 
     @BeforeEach
     void setup() {
-        editor = new Editor(null, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
+        // editor = new Editor(null, "Fulano", "fulano@detal.com", BigDecimal.TEN,
+        // true);
 
         // Mockito.when(armazenamentoEditor.salvar(editor))
         // .thenReturn(new Editor(1L, "fulano", "fulano@detal.com", BigDecimal.TEN,
@@ -109,6 +114,21 @@ public class CadastroEditorComMockAnotationTest {
         // verifica se a mensagem passada é o mesmo do editor
         assertEquals(editorSalvo.getEmail(), mensagem.getDestinatario());
 
+    }
+
+    @Test
+    // o spy serve para ver se um método real foi chamado no código de produção
+    void Dado_um_editor_valido_Quando_cadastrar_Entao_deve_verificar_o_email() {
+        // codigo para usar sem anotação
+        // Editor editorSpy = spy(editor);
+        // cadastroEditor.criar(editorSpy);
+        // verify(editorSpy, atLeast(1)).getEmail();
+
+        // codigo usando anotacao
+        cadastroEditor.criar(editor);
+
+        // o times(1) o teste não passa porque chama duas vezes
+        verify(editor, atLeast(1)).getEmail();
     }
 
 }
