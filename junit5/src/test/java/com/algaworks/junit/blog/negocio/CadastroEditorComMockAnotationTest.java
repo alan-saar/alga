@@ -43,6 +43,8 @@ public class CadastroEditorComMockAnotationTest {
         // Mockito.when(armazenamentoEditor.salvar(editor))
         // .thenReturn(new Editor(1L, "fulano", "fulano@detal.com", BigDecimal.TEN,
         // true));
+
+        // com o thenAnswer é possivel fazer uma customização do retorno
         when(armazenamentoEditor.salvar(editor))
                 .thenAnswer(invocacao -> {
                     Editor editorPassado = invocacao.getArgument(0, Editor.class);
