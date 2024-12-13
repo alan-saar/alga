@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.algaworks.junit.blog.armazenamento.ArmazenamentoEditor;
@@ -40,9 +40,17 @@ public class CadastroEditorComMockAnotationTest {
     void setup() {
         editor = new Editor(null, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
 
-        Mockito.when(armazenamentoEditor.salvar(editor))
-                .thenReturn(new Editor(1L, "fulano", "fulano@detal.com", BigDecimal.TEN, true));
-        Mockito.when(armazenamentoEditor.encontrarPorEmail(ArgumentMatchers.anyString()))
+        // Mockito.when(armazenamentoEditor.salvar(editor))
+        // .thenReturn(new Editor(1L, "fulano", "fulano@detal.com", BigDecimal.TEN,
+        // true));
+        when(armazenamentoEditor.salvar(editor))
+                .thenAnswer(invocacao -> {
+                    Editor editorPassado = invocacao.getArgument(0, Editor.class);
+                    editorPassado.setId(1L);
+                    return editorPassado;
+                });
+
+        when(armazenamentoEditor.encontrarPorEmail(ArgumentMatchers.anyString()))
                 .thenReturn(Optional.empty());
 
     }
