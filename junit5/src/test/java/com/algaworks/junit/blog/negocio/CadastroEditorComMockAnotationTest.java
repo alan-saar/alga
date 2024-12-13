@@ -64,4 +64,11 @@ public class CadastroEditorComMockAnotationTest {
 
     }
 
+    @Test
+    void Dado_um_editor_valido_Quando_criar_Entao_deve_chamar_metodo_salvar_do_armazenamento() {
+        cadastroEditor.criar(editor);
+        verify(armazenamentoEditor, times(1))
+                .salvar(eq(editor));
+    }
+
 }
