@@ -14,7 +14,7 @@ import com.algaworks.junit.blog.modelo.Editor;
 /**
  * CadastroEditorTest
  */
-public class CadastroEditorTest {
+public class CadastroEditorComStubTest {
 
     CadastroEditor cadastroEditor;
     ArmazenamentoEditorFixoEmMemoria armazenamentoEditor;
