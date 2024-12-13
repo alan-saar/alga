@@ -21,6 +21,7 @@ import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.algaworks.junit.blog.armazenamento.ArmazenamentoEditor;
+import com.algaworks.junit.blog.exception.RegraNegocioException;
 import com.algaworks.junit.blog.modelo.Editor;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -129,6 +130,21 @@ public class CadastroEditorComMockAnotationTest {
 
         // o times(1) o teste não passa porque chama duas vezes
         verify(editor, atLeast(1)).getEmail();
+    }
+
+    @Test
+    void Dado_um_editor_com_email_existente_Quando_cadastrar_Entao_deve_lancar_exception() {
+        // issoo aqui é legal, quando o método for chamado a primeira vezes
+        // vai retornar vazio.
+        // na segunda vez vai retornar um objeto
+        // significa que já foi cadastrado
+        when(armazenamentoEditor.encontrarPorEmail("fulano@detal.com"))
+            .thenReturn(Optional.empty())
+            .thenReturn(Optional.of(editor));
+
+        cadastroEditor.criar(editor);
+        Editor editorComEmailExistente = new Editor(null, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
+        assertThrows(RegraNegocioException.class, () -> cadastroEditor.criar(editorComEmailExistente));
     }
 
 }
