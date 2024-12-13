@@ -45,7 +45,7 @@ public class CadastroEditorComMockAnotationTest {
         // true));
 
         // com o thenAnswer é possivel fazer uma customização do retorno
-        when(armazenamentoEditor.salvar(editor))
+        when(armazenamentoEditor.salvar(any(Editor.class)))
                 .thenAnswer(invocacao -> {
                     Editor editorPassado = invocacao.getArgument(0, Editor.class);
                     editorPassado.setId(1L);
