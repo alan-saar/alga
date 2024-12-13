@@ -71,4 +71,17 @@ public class CadastroEditorComMockAnotationTest {
                 .salvar(eq(editor));
     }
 
+    @Test
+    void Dado_um_editor_valido_Quando_criar_e_lancar_exception_ao_salvar_Entao_nao_deve_enviar_email() {
+        // não aceita o any porque já usou num método anterior
+        // when(armazenamentoEditor.salvar(any(Editor.class)))
+        when(armazenamentoEditor.salvar(editor))
+                .thenThrow(new RuntimeException());
+        assertAll("Não deve enviar email quando lançar exception do armazenamento",
+                () -> assertThrows(RuntimeException.class, () -> cadastroEditor.criar(editor)),
+                // verifica se não houve nenhuma chamada ao método de envio de email
+                () -> verify(gerenciadorEnvioEmail, never()).enviarEmail(any()));
+
+    }
+
 }
