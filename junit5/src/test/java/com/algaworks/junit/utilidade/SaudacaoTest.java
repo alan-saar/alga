@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("Testes no utilitário Saudação")
 public class SaudacaoTest {
@@ -56,6 +58,14 @@ public class SaudacaoTest {
         assertDoesNotThrow(() -> {
             SaudacaoUtil.saudar(0);
         });
+    }
+
+    // vai rodar um teste para cada valor
+    @ParameterizedTest
+    @ValueSource(ints = { 5, 6, 7, 8, 9, 10, 11 })
+    public void DadoHorarioMatinalEntaoDeveRetornarBomDia(int hora) {
+        String saudacao = SaudacaoUtil.saudar(hora);
+        assertEquals("Bom dia", saudacao, "Saudação incorreta");
     }
 
 }
