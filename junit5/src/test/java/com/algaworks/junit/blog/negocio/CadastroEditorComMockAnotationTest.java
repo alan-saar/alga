@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.algaworks.junit.blog.armazenamento.ArmazenamentoEditor;
+import com.algaworks.junit.blog.exception.EditorNaoEncontradoException;
 import com.algaworks.junit.blog.exception.RegraNegocioException;
 import com.algaworks.junit.blog.modelo.Editor;
 
@@ -105,7 +106,7 @@ public class CadastroEditorComMockAnotationTest {
         // @formatter:off
         // Este mesmo argumentCaptor pode ser utilizado com anotacao @Captor
         // ArgumentCaptor<Mensagem> mensagemArgumentCaptor = ArgumentCaptor.forClass(Mensagem.class);
-        // @formtatter:on
+        // @formatter:on
 
         var editorSalvo = cadastroEditor.criar(editor);
 
@@ -141,8 +142,8 @@ public class CadastroEditorComMockAnotationTest {
         // na segunda vez vai retornar um objeto
         // significa que já foi cadastrado
         when(armazenamentoEditor.encontrarPorEmail("fulano@detal.com"))
-            .thenReturn(Optional.empty())
-            .thenReturn(Optional.of(editor));
+                .thenReturn(Optional.empty())
+                .thenReturn(Optional.of(editor));
 
         cadastroEditor.criar(editor);
         Editor editorComEmailExistente = new Editor(null, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
@@ -159,26 +160,69 @@ public class CadastroEditorComMockAnotationTest {
         chamadas.verify(gerenciadorEnvioEmail, times(1)).enviarEmail(any(Mensagem.class));
     }
 
-    // Esse méodo não roda por causa dos stubs feitos pelo mockito nos testes anteriores.
+    // Esse méodo não roda por causa dos stubs feitos pelo mockito nos testes
+    // anteriores.
     // para rodar tem que colocar os testes acima numa nested class
     // @Nested
     // class CadastroComEditorNull {
-    //     @Test
-    //     void Dado_um_editor_null_Quando_cadastrar_Entao_deve_lancar_exception() {
-    //         assertThrows(NullPointerException.class, () -> cadastroEditor.criar(null));
-    //        verify(armazenamentoEditor, never()).salvar(any());
-    //        verify(gerenciadorEnvioEmail, never()).enviarEmail(any());
-    //     }
+    // @Test
+    // void Dado_um_editor_null_Quando_cadastrar_Entao_deve_lancar_exception() {
+    // assertThrows(NullPointerException.class, () -> cadastroEditor.criar(null));
+    // verify(armazenamentoEditor, never()).salvar(any());
+    // verify(gerenciadorEnvioEmail, never()).enviarEmail(any());
+    // }
     //
     // }
 
-    // para esse tente rodar tem que colocar o lenient() para o mockito parar de reclamar dos stubs
+    // para esse tente rodar tem que colocar o lenient() para o mockito parar de
+    // reclamar dos stubs
     @Test
     void Dado_um_editor_null_Quando_cadastrar_Entao_deve_lancar_exception() {
-       assertThrows(NullPointerException.class, () -> cadastroEditor.criar(null));
-       verify(armazenamentoEditor, never()).salvar(any());
-       verify(gerenciadorEnvioEmail, never()).enviarEmail(any());
+        assertThrows(NullPointerException.class, () -> cadastroEditor.criar(null));
+        verify(armazenamentoEditor, never()).salvar(any());
+        verify(gerenciadorEnvioEmail, never()).enviarEmail(any());
     }
 
+    @Nested
+    class EdicaoComEditorValido {
+        @Spy
+        Editor editor = new Editor(1L, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
+
+        @BeforeEach
+        void setup() {
+            when(armazenamentoEditor.salvar(editor)).thenAnswer(
+                    invocacao -> invocacao.getArgument(0, Editor.class));
+            when(armazenamentoEditor.encontrarPorId(1L)).thenReturn(Optional.of(editor));
+        }
+
+        @Test
+        void dado_um_editor_valido_Quando_editar_Entao_deve_alterar_editor_salvo() {
+            Editor editorAtualizado = new Editor(1L, "Beltrano", "beltrano@detal.com", BigDecimal.ZERO, false);
+            cadastroEditor.editar(editorAtualizado);
+            verify(editor, times(1)).atualizarComDados(editorAtualizado);
+
+            InOrder inOrder = inOrder(editor, armazenamentoEditor);
+            inOrder.verify(editor).atualizarComDados(editorAtualizado);
+            inOrder.verify(armazenamentoEditor).salvar(editor);
+        }
+
+    }
+
+    @Nested
+    class EdicaoComEditorInexistente {
+
+        Editor editor = new Editor(99L, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
+
+        @BeforeEach
+        void setup() {
+            when(armazenamentoEditor.encontrarPorId(99L)).thenReturn(Optional.empty());
+        }
+
+        @Test
+        void Dado_um_editor_que_nao_exista_Quando_editar_Entao_deve_lancar_exception() {
+            assertThrows(EditorNaoEncontradoException.class, () -> cadastroEditor.editar(editor));
+            verify(armazenamentoEditor, never()).salvar(any());
+        }
+    }
 
 }
