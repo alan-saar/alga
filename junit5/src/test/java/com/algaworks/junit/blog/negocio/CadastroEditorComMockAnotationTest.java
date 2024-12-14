@@ -150,7 +150,7 @@ public class CadastroEditorComMockAnotationTest {
         // "fulano@detal.com", BigDecimal.TEN, true);
         // no lugar de ficar repetindo a criação de um novo editor, usa a classe
         // EditorTestData
-        Editor editorComEmailExistente = EditorTestData.umEditorNovo();
+        Editor editorComEmailExistente = EditorTestData.umEditorNovo().build();
         assertThrows(RegraNegocioException.class, () -> cadastroEditor.criar(editorComEmailExistente));
     }
 
@@ -204,11 +204,12 @@ public class CadastroEditorComMockAnotationTest {
             // @formatter:off
             // Editor editorAtualizado = new Editor(1L, "Beltrano", "beltrano@detal.com", BigDecimal.ZERO, false);
             // @formatter:on
-            Editor editorAtualizado = EditorTestData.umEditorExistente();
-            editorAtualizado.setNome("Beltrano");
-            editorAtualizado.setEmail("beltrano@detal.com");
-            editorAtualizado.setValorPagoPorPalavra(BigDecimal.ZERO);
-            editorAtualizado.setPremium(false);
+            Editor editorAtualizado = EditorTestData.umEditorExistente()
+                    .comNome("Beltrano")
+                    .comEmail("beltrano@detal.com")
+                    .comValorPagoPorPalavra(BigDecimal.ZERO)
+                    .comPremium(false)
+                    .build();
             cadastroEditor.editar(editorAtualizado);
             verify(editor, times(1)).atualizarComDados(editorAtualizado);
 

@@ -24,7 +24,7 @@ public class Editor {
         Objects.requireNonNull(nome);
         Objects.requireNonNull(email);
         Objects.requireNonNull(valorPagoPorPalavra);
-        this.id = id; //Pode ser nulo, caso seja um editor novo
+        this.id = id; // Pode ser nulo, caso seja um editor novo
         this.nome = nome;
         this.email = email;
         this.valorPagoPorPalavra = valorPagoPorPalavra;
@@ -33,6 +33,7 @@ public class Editor {
 
     /**
      * Atualiza apenas com dados permitidos
+     *
      * @param editor
      */
     public void atualizarComDados(Editor editor) {
@@ -41,6 +42,57 @@ public class Editor {
         this.email = editor.email;
         this.valorPagoPorPalavra = editor.valorPagoPorPalavra;
         this.premium = editor.premium;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public final static class Builder {
+        private Long id;
+        private String nome;
+        private String email;
+        private BigDecimal valorPagoPorPalavra;
+        private boolean premium;
+
+        // construtor privado para não criar instâncias
+        private Builder() {
+        }
+
+        public Builder comId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder comNome(String nome) {
+            this.nome = nome;
+            return this;
+        }
+
+        public Builder comEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder comValorPagoPorPalavra(BigDecimal valorPagoPorPalavra) {
+            this.valorPagoPorPalavra = valorPagoPorPalavra;
+            return this;
+        }
+
+        public Builder comPremium(boolean premium) {
+            this.premium = premium;
+            return this;
+        }
+
+        public Editor build() {
+            return new Editor(
+                    this.id,
+                    this.nome,
+                    this.email,
+                    this.valorPagoPorPalavra,
+                    this.premium);
+        }
+
     }
 
     public Long getId() {
@@ -93,8 +145,10 @@ public class Editor {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Editor editor = (Editor) o;
         return Objects.equals(id, editor.id);
     }

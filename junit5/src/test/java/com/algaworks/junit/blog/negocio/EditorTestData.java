@@ -13,13 +13,21 @@ public class EditorTestData {
     private EditorTestData() {
     };
 
-    public static Editor umEditorNovo() {
+    public static Editor.Builder umEditorNovo() {
+        return Editor.builder()
+                .comNome("Fulano")
+                .comEmail("fulano@detal.com")
+                .comValorPagoPorPalavra(BigDecimal.TEN)
+                .comPremium(true);
 
-        return new Editor(null, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
     }
 
-    public static Editor umEditorExistente() {
+    public static Editor.Builder umEditorExistente() {
+        return umEditorNovo().comId(1L);
 
-        return new Editor(1L, "Fulano", "fulano@detal.com", BigDecimal.TEN, true);
+    }
+
+    public static Editor.Builder umEditorComIdInexistente() {
+        return umEditorNovo().comId(99L);
     }
 }
