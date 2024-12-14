@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -57,14 +58,14 @@ public class CadastroEditorComMockAnotationTest {
         // true));
 
         // com o thenAnswer é possivel fazer uma customização do retorno
-        when(armazenamentoEditor.salvar(any(Editor.class)))
+        lenient().when(armazenamentoEditor.salvar(any(Editor.class)))
                 .thenAnswer(invocacao -> {
                     Editor editorPassado = invocacao.getArgument(0, Editor.class);
                     editorPassado.setId(1L);
                     return editorPassado;
                 });
 
-        when(armazenamentoEditor.encontrarPorEmail(ArgumentMatchers.anyString()))
+        lenient().when(armazenamentoEditor.encontrarPorEmail(ArgumentMatchers.anyString()))
                 .thenReturn(Optional.empty());
 
     }
@@ -157,5 +158,27 @@ public class CadastroEditorComMockAnotationTest {
         chamadas.verify(armazenamentoEditor, times(1)).salvar(editor);
         chamadas.verify(gerenciadorEnvioEmail, times(1)).enviarEmail(any(Mensagem.class));
     }
+
+    // Esse méodo não roda por causa dos stubs feitos pelo mockito nos testes anteriores.
+    // para rodar tem que colocar os testes acima numa nested class
+    // @Nested
+    // class CadastroComEditorNull {
+    //     @Test
+    //     void Dado_um_editor_null_Quando_cadastrar_Entao_deve_lancar_exception() {
+    //         assertThrows(NullPointerException.class, () -> cadastroEditor.criar(null));
+    //        verify(armazenamentoEditor, never()).salvar(any());
+    //        verify(gerenciadorEnvioEmail, never()).enviarEmail(any());
+    //     }
+    //
+    // }
+
+    // para esse tente rodar tem que colocar o lenient() para o mockito parar de reclamar dos stubs
+    @Test
+    void Dado_um_editor_null_Quando_cadastrar_Entao_deve_lancar_exception() {
+       assertThrows(NullPointerException.class, () -> cadastroEditor.criar(null));
+       verify(armazenamentoEditor, never()).salvar(any());
+       verify(gerenciadorEnvioEmail, never()).enviarEmail(any());
+    }
+
 
 }
