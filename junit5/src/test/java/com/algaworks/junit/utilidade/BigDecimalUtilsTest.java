@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.CsvSource;
  */
 public class BigDecimalUtilsTest {
 
-    @Test
     @ParameterizedTest
     @CsvSource({
             // as linhas são separadas pela virgula do java
@@ -30,7 +29,6 @@ public class BigDecimalUtilsTest {
     @ParameterizedTest
     // arquivo dentro da pasta test/resources
     @CsvFileSource(resources = "/numeros.csv")
-    @Test
     void diferentes(BigDecimal x, BigDecimal y) {
         assertFalse(BigDecimalUtils.iguais(x, y));
     }

@@ -4,6 +4,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.6"
     // https://github.com/radarsh/gradle-test-logger-plugin
     id("com.adarshr.test-logger") version "4.0.0"
+    jacoco
 }
 
 group = "com.algaworks"
@@ -14,6 +15,14 @@ java {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
+
+
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+
 
 configurations {
 	compileOnly {
@@ -55,4 +64,12 @@ testlogger {
     showPassedStandardStreams = true
     showSkippedStandardStreams = true
     showFailedStandardStreams = true
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
 }
