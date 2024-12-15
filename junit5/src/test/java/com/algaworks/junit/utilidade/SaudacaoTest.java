@@ -2,6 +2,8 @@ package com.algaworks.junit.utilidade;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.assertj.core.api.Condition;
+
 import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
@@ -47,6 +49,10 @@ public class SaudacaoTest {
                 .as("Validando se a saudação é %s", saudacaoCorreta)
                 .withFailMessage("Erro: Saudação incorreta! Resuldado: %s", saudacao)
                 .isEqualTo(saudacaoCorreta);
+
+        // terceira maneira de fazer
+        Condition<String> bomDia = new Condition<>((s) -> s.equals(saudacaoCorreta), "igual a %s", saudacaoCorreta);
+        assertThat(saudacao).is(bomDia);
     }
 
     @Test
