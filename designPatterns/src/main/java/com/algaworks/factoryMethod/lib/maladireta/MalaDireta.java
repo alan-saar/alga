@@ -1,9 +1,9 @@
-package com.algaworks.lib.maladireta;
+package com.algaworks.factoryMethod.lib.maladireta;
 
 import java.util.List;
 
-import com.algaworks.lib.contato.Contato;
-import com.algaworks.lib.contato.Contatos;
+import com.algaworks.factoryMethod.lib.contato.Contato;
+import com.algaworks.factoryMethod.lib.contato.Contatos;
 
 public abstract class MalaDireta {
 

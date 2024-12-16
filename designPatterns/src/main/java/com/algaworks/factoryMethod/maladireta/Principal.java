@@ -1,4 +1,4 @@
-package com.algaworks.maladireta;
+package com.algaworks.factoryMethod.maladireta;
 
 import javax.swing.JOptionPane;
 

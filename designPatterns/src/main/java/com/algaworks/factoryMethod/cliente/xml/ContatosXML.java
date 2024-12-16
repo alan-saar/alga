@@ -1,9 +1,9 @@
-package com.algaworks.cliente.xml;
+package com.algaworks.factoryMethod.cliente.xml;
 
 import java.net.URL;
 import java.util.List;
-import com.algaworks.lib.contato.Contato;
-import com.algaworks.lib.contato.Contatos;
+import com.algaworks.factoryMethod.lib.contato.Contato;
+import com.algaworks.factoryMethod.lib.contato.Contatos;
 import com.thoughtworks.xstream.XStream;
 
 /**

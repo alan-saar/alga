@@ -1,7 +1,7 @@
-package com.algaworks.cliente.csv;
+package com.algaworks.factoryMethod.cliente.csv;
 
-import com.algaworks.lib.contato.Contatos;
-import com.algaworks.lib.maladireta.MalaDireta;
+import com.algaworks.factoryMethod.lib.contato.Contatos;
+import com.algaworks.factoryMethod.lib.maladireta.MalaDireta;
 
 /**
  * MalaDiretaCSV

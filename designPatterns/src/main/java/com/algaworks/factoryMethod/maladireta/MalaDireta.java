@@ -1,9 +1,9 @@
-package com.algaworks.maladireta;
+package com.algaworks.factoryMethod.maladireta;
 
 import java.util.List;
 
-import com.algaworks.contato.Contato;
-import com.algaworks.contato.Contatos;
+import com.algaworks.factoryMethod.contato.Contato;
+import com.algaworks.factoryMethod.contato.Contatos;
 
 public class MalaDireta {
 

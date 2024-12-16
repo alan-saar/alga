@@ -1,4 +1,4 @@
-package com.algaworks.lib.contato;
+package com.algaworks.factoryMethod.lib.contato;
 
 public class Contato {
 

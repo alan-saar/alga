@@ -1,4 +1,4 @@
-package com.algaworks.contato;
+package com.algaworks.factoryMethod.contato;
 
 public class Contato {
 
@@ -25,5 +25,5 @@ public class Contato {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 }

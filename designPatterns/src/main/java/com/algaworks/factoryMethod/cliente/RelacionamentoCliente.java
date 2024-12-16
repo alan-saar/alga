@@ -1,8 +1,8 @@
-package com.algaworks.cliente;
+package com.algaworks.factoryMethod.cliente;
 
 import javax.swing.JOptionPane;
-import com.algaworks.cliente.csv.MalaDiretaCSV;
-import com.algaworks.lib.maladireta.MalaDireta;
+import com.algaworks.factoryMethod.cliente.csv.MalaDiretaCSV;
+import com.algaworks.factoryMethod.lib.maladireta.MalaDireta;
 
 /**
  * RelacionamentoCliente
