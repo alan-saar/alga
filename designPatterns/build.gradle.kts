@@ -30,16 +30,17 @@ repositories {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter")
-	compileOnly("org.projectlombok:lombok")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	annotationProcessor("org.projectlombok:lombok")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-  implementation("com.thoughtworks.xstream:xstream:1.4.21")
-  implementation("net.sf.opencsv:opencsv-fork:2.3")
-  // implementation("com.opencsv:opencsv:3.1")
+    implementation("org.springframework.boot:spring-boot-starter")
+    compileOnly("org.projectlombok:lombok")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("com.thoughtworks.xstream:xstream:1.4.21")
+    implementation("net.sf.opencsv:opencsv-fork:2.3")
+    implementation("org.quartz-scheduler:quartz:2.2.1")
+    implementation("org.quartz-scheduler:quartz-jobs:2.2.1")
 }
 
 tasks.withType<Test> {
