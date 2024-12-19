@@ -12,6 +12,13 @@ public class Pagamento {
     private Operadora operadora;
     private GestorDeRisco gestorDeRisco;
 
+    // aqui que é o pulo do gato
+    // No lugar de inserir os objetos que eu quero, eu coloco a fabrica que eu quero
+    // e a fábrica que vai instanciiar os objetos
+    // a idéia é: agrupar uma família de objetos
+    // definição:
+    // O padrão abstractFactory fornece uma interface para criar famílias de objetos relacionados ou dependentes sem
+    // especificar suas classes concretas
     public Pagamento(ModuloPagamentoFactory moduloPagamentoFactory) {
         this.operadora = moduloPagamentoFactory.criarOperadora();
         this.gestorDeRisco = moduloPagamentoFactory.criarGestorDeRisco();
