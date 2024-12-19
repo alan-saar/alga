@@ -15,6 +15,7 @@ public class ContatosXML implements Contatos {
     @SuppressWarnings("unchecked")
     public ContatosXML(String... nomesArquivos) {
         XStream xstream = new XStream();
+        xstream.allowTypesByWildcard(new String[] {"com.algaworks.**",});
         xstream.alias("contatos", List.class);
         xstream.alias("contato", Contato.class);
 
