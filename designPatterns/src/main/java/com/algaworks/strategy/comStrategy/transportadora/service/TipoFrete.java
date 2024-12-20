@@ -18,6 +18,7 @@ public enum TipoFrete {
         }
     };
 
+    // ao colocar um abstract no enum significa que cada enum terá que implementar esse método
     public abstract Frete obterFrete();
 
 }

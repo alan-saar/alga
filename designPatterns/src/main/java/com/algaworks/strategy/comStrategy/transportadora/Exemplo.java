@@ -15,6 +15,8 @@ public class Exemplo {
             int opcaoFrete = entrada.nextInt();
             TipoFrete tipoFrete = TipoFrete.values()[opcaoFrete - 1];
 
+            // aqui o padrão strategy é implementado
+            // a função é retornada por um factory no enum
             Frete frete = tipoFrete.obterFrete();
             double preco = frete.calcularPreco(distancia);
             System.out.printf("O valor total é de R$%.2f", preco);
