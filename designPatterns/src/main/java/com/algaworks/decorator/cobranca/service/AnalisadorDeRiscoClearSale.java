@@ -21,7 +21,11 @@ public class AnalisadorDeRiscoClearSale implements AutorizadorCartaoCredito {
             throw new RiscoCreditoException("Possível fraude, negando pagamento!");
         }
 
+        // padrão decorator consigo adicionar funcionalidades antes ou depois do método decorado
+        // para isso a classe decoradora impolementa a mesma interface e contém uma propriedade com o objeto que está decorando
+        // funcionalidades antes
         autorizador.autorizar(cliente, cartaoCredito, valor);
+        // funcionalidades depois
     }
 
 }

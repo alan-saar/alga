@@ -41,6 +41,8 @@ public class ExemploUso {
             CartaoCredito cartaoCredito = new CartaoCredito(cartao, nomeCartao,
                     YearMonth.of(anoVencimento, mesVencimento), codigoSeguranca);
 
+
+            // aqui acontece a decoração
             AutorizadorCartaoCredito autorizador =
                     new AnalisadorDeRiscoClearSale(new AutorizadorCielo());
             autorizador.autorizar(cliente, cartaoCredito, valor);
